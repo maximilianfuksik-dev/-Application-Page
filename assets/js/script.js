@@ -1,137 +1,129 @@
-// Clock logic 
+// ============================================
+// script.js - UI Functions
+// Clock, Dark Mode, Modal, Skill Bars
+// ============================================
 
-function updateClock () {  // 
-    // Date object containing current time and date 
-    const now = new Date(); 
-    // ensures hours, min, sec are always displayed as two-digit text  
-    const hours = now.getHours().toString().padStart(2, "0"); 
+// ==================== CLOCK ====================
+
+function updateClock() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, "0");
     const minutes = now.getMinutes().toString().padStart(2, "0");
     const seconds = now.getSeconds().toString().padStart(2, "0");
-    // All weekdays in an ARRAY 
-    const days = [
-        "Sonntag",
-        "Montag",
-        "Dienstag",
-        "Mittwoch",
-        "Donnerstag",
-        "Freitag",
-        "Samstag"
+    
+    const days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+    const months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 
-    ];
-    // All months in an array 
-    const months =[
-        "Januar", // 0
-        "Feburar", // 1
-        "März",
-        "April",
-        "Mai",
-        "Juni",
-        "Juli",
-        "August",
-        "September",
-        "Oktober",
-        "November",
-        "Dezember"
-    ];
+    const dayName = days[now.getDay()];
+    const monthName = months[now.getMonth()];
+    const day = now.getDate().toString().padStart(2, '0');
+    const year = now.getFullYear();
 
-    const dayName = days[now.getDay()];  // Access via array selects the matching day
-    const monthName = months[now.getMonth()]; // Access via array selects the matching month
-    const day = now.getDate().toString().padStart(2, '0'); // Access current day of week
-    const year = now.getFullYear(); // Access current year 
-
-    document.getElementById('hours').textContent = hours;
-    document.getElementById('minutes').textContent = minutes;
-    document.getElementById('seconds').textContent = seconds;
-    document.getElementById('date').textContent = `${dayName}, ${monthName} ${day}. ${year}`;
-
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    const dateEl = document.getElementById('date');
+    
+    if (hoursEl) hoursEl.textContent = hours;
+    if (minutesEl) minutesEl.textContent = minutes;
+    if (secondsEl) secondsEl.textContent = seconds;
+    if (dateEl) dateEl.textContent = `${dayName}, ${monthName} ${day}. ${year}`;
 }
 
-
-if(document.getElementById('clock')) {
-  setInterval(updateClock, 1000); // Call function with interval of 1000 milliseconds = 1 second
-  updateClock();  // Clock is displayed immediately
+// Start clock only if element exists
+if (document.getElementById('clock')) {
+    setInterval(updateClock, 1000);
+    updateClock();
 }
- 
- 
-// Clock logic END 
 
-// Document display on the website 
-  function openModal(filePath) {
+// ==================== MODAL (PDF Viewer) ====================
+
+function openModal(filePath) {
     const modal = document.getElementById("pdf-modal");
     const frame = document.getElementById("modal-frame");
+    if (modal && frame) {
+        frame.src = filePath;
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
+    }
+}
 
-    frame.src = filePath;
-    modal.style.display = "block"; // Opens the PDF 
-  }
-
-  function closeModal() {
+function closeModal() {
     const modal = document.getElementById("pdf-modal");
     const frame = document.getElementById("modal-frame");
+    if (modal && frame) {
+        modal.style.display = "none";
+        frame.src = "";
+        document.body.style.overflow = "auto";
+    }
+}
 
-    modal.style.display = "none";
-    frame.src = ""; // Stops the PDF
-  }
-
-  window.onclick = function(event) {
+// Close modal when clicking outside
+window.onclick = function(event) {
     const modal = document.getElementById("pdf-modal");
-    if (event.target == modal) {
+    if (event.target === modal) {
         closeModal();
     }
-  }
-// Document display END 
+}
 
-// Dark mode function 
- document.addEventListener("DOMContentLoaded", function () {
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeModal();
+    }
+});
+
+// ==================== DARK MODE ====================
+
+// Wait for DOM to be fully loaded
+document.addEventListener("DOMContentLoaded", function() {
+    // Find the toggle checkbox - could be anywhere in the DOM
     const checkbox = document.getElementById('toggle-checkbox');
     const themeStylesheet = document.getElementById('light');
+    
+    if (!checkbox || !themeStylesheet) {
+        console.warn("Dark mode elements not found");
+        return;
+    }
 
-    // Checks if a selection has already been made 
+    // Load saved theme or detect based on time
     const userTheme = localStorage.getItem('theme');
-
-    // current time in variable for automatic dark mode setting 
     const now = new Date();
     const hours = now.getHours();
 
-    // Variable for which start theme should apply 
     let initialTheme;
-    // Conditions for theme change 
-    if (userTheme) { // negate operator and then 
-        initialTheme = userTheme;  
+    if (userTheme) {
+        initialTheme = userTheme;
     } else {
         initialTheme = (hours >= 18 || hours < 6) ? "dark" : "light";
     }
 
-    // Activate theme 
-    setTheme(initialTheme);
-
-    checkbox.checked = initialTheme === "dark";
-
-    checkbox.addEventListener("change", function () {
-        const newTheme = checkbox.checked ? "dark" : "light";
-        setTheme (newTheme);
-        localStorage.setItem("theme", newTheme);
-
-    });
-
     function setTheme(theme) {
-        // *** CHANGED: Both CSS files now without # in filename ***
-        // *** Make sure files are named: stylesheet.css and styledark.css ***
-        const href = theme == "dark" ? "assets/css/styledark.css" : "assets/css/stylesheet.css";
+        const href = theme === "dark" ? "assets/css/styledark.css" : "assets/css/stylesheet.css";
         themeStylesheet.setAttribute("href", href);
+        console.log(`Theme changed to: ${theme}`);
     }
 
- });
+    // Apply initial theme
+    setTheme(initialTheme);
+    checkbox.checked = initialTheme === "dark";
 
- // END Dark mode function 
-  // To use this: Add elements with class "skill-progress" and data-level attribute to your HTML
-  
-  document.addEventListener("DOMContentLoaded", () => {
-    const skills = document.querySelectorAll(".skill-progress");
-  
-    skills.forEach(skill => {
-      const level = skill.getAttribute("data-level");
-      skill.style.width = level + "%";
+    // Listen for changes
+    checkbox.addEventListener("change", function() {
+        const newTheme = checkbox.checked ? "dark" : "light";
+        setTheme(newTheme);
+        localStorage.setItem("theme", newTheme);
     });
-  });
+});
 
- // END Skill-Bar function
+// ==================== SKILL BARS ====================
+
+document.addEventListener("DOMContentLoaded", function() {
+    const skills = document.querySelectorAll(".skill-progress");
+    skills.forEach(skill => {
+        const level = skill.getAttribute("data-level");
+        if (level) {
+            skill.style.width = level + "%";
+        }
+    });
+});

@@ -8,34 +8,28 @@
 </head>
 <body>
 <!-- HEAD -->
-        <header>
-            <img src="assets/images/trees-8563877_1920.jpg" class="header-image" alt="Header Bild mit Bäumen">
-            <div class="header-content">
-             <div class="icon"></div>
-<!-- Navigations-Bar--> 
-                <div id="nav">
-                    <nav>
-                        <ul>
-                            <li><a href="index.html"> 🏠︎ Home</a></li>
-                            <li><a href="about.html"> 𓂃🖊 About</a></li>
-                            <li><a href="cv.html"> 🇨🇻 Lebenslauf</a></li>      
-                            <li><a href="certificate.html"> 🗐 Zertifikate</a></li>    
-                            <li><a href="project.html"> 🗒 Projekte</a></li>    <!-- In Progress -->
-                            <li><a href="contact.html"> ✉ Kontakt</a></li>    <!-- In Progress -->
-                            <li><a href="weiteres.html"> » Weiteres</a></li> <!-- In Progress -->
-                            <li><a href="#"> 🛠 </a></li>
-                            <!-- Dark Mode als Listenelement -->
-                            <li class="dark-mode-item">
-                                <span id="dayNight"> 🔆 | ☾ </span>
-                                <label class="darkMode" for="toggle-checkbox">
-                                    <input type="checkbox" id="toggle-checkbox">
-                                    <span class="d-btn"></span>
-                                </label>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+<header>
+    <img src="assets/images/trees-8563877_1920.jpg" class="header-image" alt="Header image with trees">
+    <div class="header-content">
+        <div class="icon"></div>
+        <!-- Navigation Bar - Will be filled by config.json -->
+        <div id="nav">
+            <nav>
+                <ul id="nav-links">
+                    <!-- Dynamic navigation from cv-loader.js will go here -->
+                </ul>
+                
+                <!-- Dark Mode Toggle - STATIC (only once in HTML) -->
+                <li class="dark-mode-item">
+                    <span id="dayNight"> 🔆 | ☾ </span>
+                    <label class="darkMode" for="toggle-checkbox">
+                        <input type="checkbox" id="toggle-checkbox">
+                        <span class="d-btn"></span>
+                    </label>
+                </li>
+            </nav>
+        </div>
+    </div>
     <!-- Clock -->
     <div id="clock">
         <div class="time">
@@ -46,48 +40,38 @@
         <div id="date"></div>
     </div>
 </header>
-
 <!-- EIN Container für alles -->
 <div class="container">
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="widget search-widget">
-            <h3>Suchenliste</h3>
+            <h3>Search</h3>
             <span class="search-icon"></span>
-            <input type="text" placeholder="Suchen..." id="json-search">
+            <input type="text" id="json-search" placeholder="">
         </div>
 
-        <div class="widget">
-            <h3>Kontaktinfo</h3>
-            <div id="json-contact">
-                <p>📧 Email: <span class="json-email"></span></p>
-                <p>📞 Tel: <span class="json-phone"></span></p>
-                <p>📍 Adresse: <span class="json-address"></span></p>
-                <p> 🌎 Land: <span class="json-country"></span></p>
-            </div>
-        </div>
-
-        <!-- SOCIAL MEDIA / PROFIL LINKS -->
+        <!-- SOCIAL MEDIA / PROFILE LINKS - Dynamic from config.json -->
         <div class="widget">
             <h3>Links</h3>
-            <div class="profile-links">
-                <a href="https://github.com/maximilianfuksik-dev" target="_blank" class="profile-link">
-                    <span class="profile-icon">🐙</span>
-                    GitHub
-                </a>
-                <br>
-                <a href="https://linkedin.com/in/DeinLinkedIn" target="_blank" class="profile-link">
-                    <span class="profile-icon">💼</span>
-                    LinkedIn
-                </a>
+            <div id="social-links" class="profile-links">
+                <!-- Dynamic social links from config.json -->
             </div>
-            <br>
+        </div>
         
-        <!-- INTERESSEN MIT PLATZHALTER -->
         <div class="widget">
-            <h3>Interessen</h3>
+            <h3>Contact</h3>
+            <div id="json-contact">
+                <p>Email: <span class="json-email"></span></p>
+                <p>Phone: <span class="json-phone"></span></p>
+                <p>Address: <span class="json-address"></span></p>
+                <p>Country: <span class="json-country"></span></p>
+            </div>
+        </div>
+
+        <div class="widget">
+            <h3>Interests</h3>
             <div id="json-interests">
-                <p class="json-loading">Lade Interessen...</p>
+                <p class="json-loading">Loading interests...</p>
             </div>
         </div>
     </aside>
@@ -161,7 +145,7 @@
                         <p>Hochgeladen am: 12.05.2025</p>
                         <div class="document-actions">
                             <button class="btn" onclick="openModal('docs/Lebenslauf.pdf')">Ansehen</button>
-                            <a href="docs/Lebenslauf.pdf" download>
+                            <a href="/docs/bwg/Lebenslauf 2026.pdf" download>
                                 <button class="btn">Herunterladen</button>
                             </a>
                         </div>
@@ -303,9 +287,8 @@
     </p>
 </footer>
 
-<script src="assets/js/script.js"></script>
 <script src="assets/js/cv-loader.js"></script>
-
+<script src="assets/js/script.js"></script>
 
 </body>
 </html>
