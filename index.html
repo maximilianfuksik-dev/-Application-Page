@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link id="light" rel="stylesheet" href="/assets/stylesheet.css">
+    <title>Maximilian Fuksik</title>
+</head>
+<body>
+<!-- HEAD -->
+        <header>
+            <img src="/assets/images/trees-8563877_1920.jpg" class="header-image" alt="Header Bild mit Bäumen">
+            <div class="header-content">
+             <div class="icon"></div>
+<!-- Navigations-Bar--> 
+                <div id="nav">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html"> 🏠︎ Home</a></li>
+                            <li><a href="about.html"> 𓂃🖊 About</a></li>
+                            <li><a href="cv.html"> 🇨🇻 Lebenslauf</a></li>      
+                            <li><a href="certificate.html"> 🗐 Zertifikate</a></li>    
+                            <li><a href="project.html"> 🗒 Projekte</a></li>    <!-- In Progress -->
+                            <li><a href="contact.html"> ✉ Kontakt</a></li>    <!-- In Progress -->
+                            <li><a href="weiteres.html"> » Weiteres</a></li> <!-- In Progress -->
+                            <li><a href="#"> 🛠 </a></li>
+                            <!-- Dark Mode als Listenelement -->
+                            <li class="dark-mode-item">
+                                <span id="dayNight"> 🔆 | ☾ </span>
+                                <label class="darkMode" for="toggle-checkbox">
+                                    <input type="checkbox" id="toggle-checkbox">
+                                    <span class="d-btn"></span>
+                                </label>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+<!-- Clock -->
+            <div id="clock">
+                <div class="time">
+                    <span id="hours"></span><span class="separator">:</span>
+                    <span id="minutes"></span><span class="separator">:</span>
+                    <span id="seconds"></span>
+                </div>
+                <div id="date"></div>
+            </div>
+        </header>
+
+<!-- EIN Container für alles -->
+<div class="container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="widget search-widget">
+            <h3> 🔍︎ Suchenliste</h3>
+            <span class="search-icon"></span>
+            <input type="text" placeholder="Suchen...">
+        </div>
+    </aside>
+<!-- MAIN -->
+    <main>
+        <div class="welcome">
+            <h1>Willkommen auf meiner Webseite</h1>
+            <p>Ich bin Maximilian Fuksik, und dies ist meine persönliche Webseite. Hier finden Sie Informationen über mich, meine Zertifikate, Projekte und Möglichkeiten, mit mir in Kontakt zu treten.</p>
+        </div>
+
+<!-- Über mich mit Bild/Text Blöcken -->
+        <section class="about-section">
+            <div class="about-item">
+                <div class="about-image">
+                    <img src="/assets/images/office-9582092_1920.png" alt="Über mich Bild 1">
+                </div>
+                <div class="about-text">
+                    <h2>Mein Weg in die IT</h2>
+                    <p>Mein Weg in die IT ist geprägt von Neugier, Lernbereitschaft und unternehmerischem Denken. Nach meinem Fachabitur in Wirtschaft und Verwaltung und ersten praktischen Einblicken habe ich mich intensiv mit den Themen Finanzen und Investment beschäftigt.</p>
+                </div>
+            </div>
+
+            <div class="about-item reverse">
+                <div class="about-text">
+                    <h2>Umschulung & Ziel</h2>
+                    <p>Getrieben von der Lust, aktiv zum Schutz digitaler Systeme beizutragen, habe ich mich für eine Umschulung zum Fachinformatiker für Anwendungsentwicklung entschieden. Mein langfristiges Ziel ist es, mich auf IT-Sicherheit (Cyber Security) zu spezialisieren und ortsunabhängig zu arbeiten.</p>
+                </div>
+                <div class="about-image">
+                    <img src="/assets/images/network-197303_1920.jpg" alt="Über mich Bild 2">
+                </div>
+            </div>
+
+            <div class="about-item">
+                <div class="about-image">
+                    <img src="/assets/images/computer-2162153_1920.jpg" alt="Über mich Bild 3">
+                </div>
+                <div class="about-text">
+                    <h2>Stärken</h2>
+                    <p>Meine Stärken liegen in meinem analytischen Denken, meiner schnellen Auffassungsgabe und meiner Leidenschaft für komplexe Systeme – was mich beruflich wie privat antreibt.</p>
+                </div>
+            </div>
+        </section>
+        
+<!-- Galerie -->
+        <section class="gallery">
+            <h2>Bildergalerie</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="/assets/images/circuit-board-279987_1920.jpg" alt="Bild 1"></div>
+                <div class="gallery-item"><img src="/assets/images/switch-6955359_1920.jpg" alt="Bild 2"></div>
+                <div class="gallery-item"><img src="pic/beispiel3.jpg" alt="Bild 3"></div>
+                <div class="gallery-item"><img src="pic/beispiel4.jpg" alt="Bild 4"></div>
+                <div class="gallery-item"><img src="pic/beispiel5.jpg" alt="Bild 5"></div>
+            </div>
+        </section>
+    </main>
+</div>
+    
+<!-- FOOTER -->
+<footer>
+    <p>
+        <a href="/legal/legalnotice.html">Impressum</a> | 
+        <a href="/legal/privacypolicy.html">Datenschutz</a> | 
+        <a href="contact.html">Kontakt</a> | 
+        © 2025 Maximilian Fuksik. Alle Rechte vorbehalten.
+    </p>
+</footer>
+
+<script src="/assets/script.js"></script>
+<script src="/assets/cv-loader.js"></script>
+</body>
+</html>
