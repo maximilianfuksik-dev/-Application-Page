@@ -1,0 +1,15 @@
+{
+  "site": {
+    "title": "Maximilian Fuksik",
+    "defaultTheme": "light",
+    "autoDarkMode": true
+  },
+  "paths": {
+    "images": "assets/images/",
+    "certificates": "assets/certificates/"
+  },
+  "social": {
+    "github": "https://github.com/maximilianfuksik-dev",
+    "linkedin": "https://linkedin.com/in/..."
+  }
+}

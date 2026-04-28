@@ -1,14 +1,13 @@
-
-// Uhrzeit logic 
+// Clock logic 
 
 function updateClock () {  // 
-    // Date Objekt das die aktuelle Zeit und das aktuelle Datum enthält 
+    // Date object containing current time and date 
     const now = new Date(); 
-    // sorgt dafür das die Std, min, sec immer in zwei stellen als Text angezeigt wird  
+    // ensures hours, min, sec are always displayed as two-digit text  
     const hours = now.getHours().toString().padStart(2, "0"); 
     const minutes = now.getMinutes().toString().padStart(2, "0");
     const seconds = now.getSeconds().toString().padStart(2, "0");
-    // Alle Wochentage in einem ARRAY 
+    // All weekdays in an ARRAY 
     const days = [
         "Sonntag",
         "Montag",
@@ -19,7 +18,7 @@ function updateClock () {  //
         "Samstag"
 
     ];
-    // Alle Monate in einem Array 
+    // All months in an array 
     const months =[
         "Januar", // 0
         "Feburar", // 1
@@ -35,10 +34,10 @@ function updateClock () {  //
         "Dezember"
     ];
 
-    const dayName = days[now.getDay()];  // Durch Array zugriff wird der Passende Tag gewählt
-    const monthName = months[now.getMonth()]; // Durch Array zugriff wird der passende Monat gewählt
-    const day = now.getDate().toString().padStart(2, '0'); // Zugriff auf Aktuellen Wochentag
-    const year = now.getFullYear(); // Zugriff auf das Aktuelle Jahr 
+    const dayName = days[now.getDay()];  // Access via array selects the matching day
+    const monthName = months[now.getMonth()]; // Access via array selects the matching month
+    const day = now.getDate().toString().padStart(2, '0'); // Access current day of week
+    const year = now.getFullYear(); // Access current year 
 
     document.getElementById('hours').textContent = hours;
     document.getElementById('minutes').textContent = minutes;
@@ -47,17 +46,22 @@ function updateClock () {  //
 
 }
 
-setInterval(updateClock, 1000); // Aufruf der Funtion mit einer Intervallfunktion auf 1000 Milisec's = 1 Sec
-updateClock(); // Uhr wird sofort angezeigt 
-// Uhrzeit Logic ENDE 
 
-// Dokumenten Anzeige auf der Website 
+if(document.getElementById('clock')) {
+  setInterval(updateClock, 1000); // Call function with interval of 1000 milliseconds = 1 second
+  updateClock();  // Clock is displayed immediately
+}
+ 
+ 
+// Clock logic END 
+
+// Document display on the website 
   function openModal(filePath) {
     const modal = document.getElementById("pdf-modal");
     const frame = document.getElementById("modal-frame");
 
     frame.src = filePath;
-    modal.style.display = "block"; // Öffnet das PDF 
+    modal.style.display = "block"; // Opens the PDF 
   }
 
   function closeModal() {
@@ -65,7 +69,7 @@ updateClock(); // Uhr wird sofort angezeigt
     const frame = document.getElementById("modal-frame");
 
     modal.style.display = "none";
-    frame.src = ""; // Stoppt das PDF
+    frame.src = ""; // Stops the PDF
   }
 
   window.onclick = function(event) {
@@ -74,31 +78,30 @@ updateClock(); // Uhr wird sofort angezeigt
         closeModal();
     }
   }
-// Dokumenten Anzeige  ENDE 
+// Document display END 
 
-// Darkmode Funktion 
+// Dark mode function 
  document.addEventListener("DOMContentLoaded", function () {
     const checkbox = document.getElementById('toggle-checkbox');
     const themeStylesheet = document.getElementById('light');
 
-    // Prüft ob auswahl schon einmal getroffen wurde 
-
+    // Checks if a selection has already been made 
     const userTheme = localStorage.getItem('theme');
 
-    // aktuelle Uhrzeit in Variabele für automatische Einstellung des darkmodes 
+    // current time in variable for automatic dark mode setting 
     const now = new Date();
     const hours = now.getHours();
 
-    // Variable für welches Start Theme gelten soll 
+    // Variable for which start theme should apply 
     let initialTheme;
-    // Bedigungen für Theme wechsel 
-    if (userTheme) { // negate operator und dann 
+    // Conditions for theme change 
+    if (userTheme) { // negate operator and then 
         initialTheme = userTheme;  
     } else {
-        initialTheme = (hours >= 40 || hours < 6) ? "dark" : "light";
+        initialTheme = (hours >= 18 || hours < 6) ? "dark" : "light";
     }
 
-    // Thema altivieren 
+    // Activate theme 
     setTheme(initialTheme);
 
     checkbox.checked = initialTheme === "dark";
@@ -111,24 +114,24 @@ updateClock(); // Uhr wird sofort angezeigt
     });
 
     function setTheme(theme) {
-        const href = theme == "dark" ? "styledark.css" : "stylesheet.css";
+        // *** CHANGED: Both CSS files now without # in filename ***
+        // *** Make sure files are named: stylesheet.css and styledark.css ***
+        const href = theme == "dark" ? "assets/css/styledark.css" : "assets/css/stylesheet.css";
         themeStylesheet.setAttribute("href", href);
     }
 
  });
 
- // ENDE Darkmode Funktion 
-
-  // Skill-Bar Funktion
+ // END Dark mode function 
+  // To use this: Add elements with class "skill-progress" and data-level attribute to your HTML
+  
   document.addEventListener("DOMContentLoaded", () => {
-  const skills = document.querySelectorAll(".skill-progress");
-
-  skills.forEach(skill => {
-    const level = skill.getAttribute("data-level");
-    skill.style.width = level + "%";
+    const skills = document.querySelectorAll(".skill-progress");
+  
+    skills.forEach(skill => {
+      const level = skill.getAttribute("data-level");
+      skill.style.width = level + "%";
+    });
   });
-});
 
-// ENDE Skill-Bar Funktion 
-
-
+ // END Skill-Bar function

@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link id="light" rel="stylesheet" href="/assets/stylesheet.css">
+    <link id="light" rel="stylesheet" href="assets/css/stylesheet.css">
     <title>Maximilian Fuksik</title>
 </head>
 <body>
 <!-- HEAD -->
         <header>
-            <img src="/assets/images/trees-8563877_1920.jpg" class="header-image" alt="Header Bild mit Bäumen">
+            <img src="assets/images/trees-8563877_1920.jpg" class="header-image" alt="Header Bild mit Bäumen">
             <div class="header-content">
              <div class="icon"></div>
 <!-- Navigations-Bar--> 
@@ -56,56 +56,49 @@
             <span class="search-icon"></span>
             <input type="text" placeholder="Suchen...">
         </div>
+        
+        <!-- +++ ADDED: Container für Interessen (wird aus JSON gefüllt) +++ -->
+        <div class="widget">
+            <h3>⭐ Interessen</h3>
+            <div id="json-interests">
+                <!-- Wird dynamisch aus JSON gefüllt -->
+            </div>
+        </div>
+        
+        <!-- +++ ADDED: Container für Kontaktinfo (wird aus JSON gefüllt) +++ -->
+        <div class="widget">
+            <h3>📞 Kontakt</h3>
+            <div id="json-contact">
+                <p>📧 Email: <span class="json-email"></span></p>
+                <p>📞 Tel: <span class="json-phone"></span></p>
+                <p>📍 Adresse: <span class="json-address"></span></p>
+                <p>🌎 Land: <span class="json-country"></span></p>
+            </div>
+        </div>
     </aside>
+    
 <!-- MAIN -->
     <main>
+        <!-- +++ CHANGED: Welcome Section mit IDs für JSON +++ -->
         <div class="welcome">
-            <h1>Willkommen auf meiner Webseite</h1>
-            <p>Ich bin Maximilian Fuksik, und dies ist meine persönliche Webseite. Hier finden Sie Informationen über mich, meine Zertifikate, Projekte und Möglichkeiten, mit mir in Kontakt zu treten.</p>
-        </div>
+            <h1 id="welcome-title"></h1>
+            <p id="welcome-text"></p>
+            </div>  
 
-<!-- Über mich mit Bild/Text Blöcken -->
-        <section class="about-section">
-            <div class="about-item">
-                <div class="about-image">
-                    <img src="/assets/images/office-9582092_1920.png" alt="Über mich Bild 1">
-                </div>
-                <div class="about-text">
-                    <h2>Mein Weg in die IT</h2>
-                    <p>Mein Weg in die IT ist geprägt von Neugier, Lernbereitschaft und unternehmerischem Denken. Nach meinem Fachabitur in Wirtschaft und Verwaltung und ersten praktischen Einblicken habe ich mich intensiv mit den Themen Finanzen und Investment beschäftigt.</p>
-                </div>
-            </div>
-
-            <div class="about-item reverse">
-                <div class="about-text">
-                    <h2>Umschulung & Ziel</h2>
-                    <p>Getrieben von der Lust, aktiv zum Schutz digitaler Systeme beizutragen, habe ich mich für eine Umschulung zum Fachinformatiker für Anwendungsentwicklung entschieden. Mein langfristiges Ziel ist es, mich auf IT-Sicherheit (Cyber Security) zu spezialisieren und ortsunabhängig zu arbeiten.</p>
-                </div>
-                <div class="about-image">
-                    <img src="/assets/images/network-197303_1920.jpg" alt="Über mich Bild 2">
-                </div>
-            </div>
-
-            <div class="about-item">
-                <div class="about-image">
-                    <img src="/assets/images/computer-2162153_1920.jpg" alt="Über mich Bild 3">
-                </div>
-                <div class="about-text">
-                    <h2>Stärken</h2>
-                    <p>Meine Stärken liegen in meinem analytischen Denken, meiner schnellen Auffassungsgabe und meiner Leidenschaft für komplexe Systeme – was mich beruflich wie privat antreibt.</p>
-                </div>
-            </div>
+<!-- +++ CHANGED: About Section - Container bleibt, Inhalt wird aus JSON gefüllt +++ -->
+        <section class="about-section" id="about-section-container">
+            <!-- Wird dynamisch aus pageContent.json gefüllt -->
         </section>
         
-<!-- Galerie -->
+<!-- +++ CHANGED: Galerie mit ID für JSON +++ -->
         <section class="gallery">
-            <h2>Bildergalerie</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item"><img src="/assets/images/circuit-board-279987_1920.jpg" alt="Bild 1"></div>
-                <div class="gallery-item"><img src="/assets/images/switch-6955359_1920.jpg" alt="Bild 2"></div>
-                <div class="gallery-item"><img src="pic/beispiel3.jpg" alt="Bild 3"></div>
-                <div class="gallery-item"><img src="pic/beispiel4.jpg" alt="Bild 4"></div>
-                <div class="gallery-item"><img src="pic/beispiel5.jpg" alt="Bild 5"></div>
+            <h2 id="gallery-title">Bildergalerie</h2>
+            <div class="gallery-grid" id="gallery-grid">
+                <div class="gallery-item"><img id="gallery-img-1" src="" alt="Bild 1"></div>
+                <div class="gallery-item"><img id="gallery-img-2" src="" alt="Bild 2"></div>
+                <div class="gallery-item"><img id="gallery-img-3" src="" alt="Bild 3"></div>
+                <div class="gallery-item"><img id="gallery-img-4" src="" alt="Bild 4"></div>
+                <div class="gallery-item"><img id="gallery-img-5" src="" alt="Bild 5"></div>
             </div>
         </section>
     </main>
@@ -114,14 +107,16 @@
 <!-- FOOTER -->
 <footer>
     <p>
-        <a href="/legal/legalnotice.html">Impressum</a> | 
-        <a href="/legal/privacypolicy.html">Datenschutz</a> | 
+        <a href="legal/legalnotice.html">Impressum</a> | 
+        <a href="legal/privacypolicy.html">Datenschutz</a> | 
         <a href="contact.html">Kontakt</a> | 
         © 2025 Maximilian Fuksik. Alle Rechte vorbehalten.
     </p>
 </footer>
 
-<script src="/assets/script.js"></script>
-<script src="/assets/cv-loader.js"></script>
+<!-- +++ CHANGED: Scripts richtig eingebunden +++ -->
+<script src="assets/js/script.js"></script>
+<script src="assets/js/cv-loader.js"></script>
+
 </body>
 </html>

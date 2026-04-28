@@ -1,0 +1,16 @@
+{
+  "title": "Meine Projekte",
+  "items": [
+    {
+      "name": "Bewerbungsseite",
+      "description": "Persönliche Portfolio-Website mit HTML, CSS und JavaScript",
+      "link": "https://github.com/...",
+      "image": "project1.jpg"
+    },
+    {
+      "name": "To-Do App",
+      "description": "Eine einfache Aufgabenverwaltung mit localStorage",
+      "link": "https://github.com/..."
+    }
+  ]
+}
