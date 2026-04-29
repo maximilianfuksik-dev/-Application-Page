@@ -4,13 +4,13 @@
     {
       "name": "Bewerbungsseite",
       "description": "Persönliche Portfolio-Website mit HTML, CSS und JavaScript",
-      "link": "https://github.com/...",
+      "link": "https://github.com/maximilianfuksik-dev/-Application-Page",
       "image": "project1.jpg"
     },
     {
-      "name": "To-Do App",
-      "description": "Eine einfache Aufgabenverwaltung mit localStorage",
-      "link": "https://github.com/..."
+      "name": "Digital Clock",
+      "description": "Eine einfache Digital Uhr ",
+      "link": "https://github.com/maximilianfuksik-dev/DigitalClock"
     }
   ]
 }

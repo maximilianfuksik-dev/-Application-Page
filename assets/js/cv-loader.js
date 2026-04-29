@@ -13,6 +13,95 @@ let siteData = {
     legal: null
 };
 
+// ==================== PASSWORD PROTECTION ====================
+
+// Password for protected documents
+const DOCS_PASSWORD = '2026'; // Change this to your password
+
+// List of protected documents (by title or path)
+const PROTECTED_DOCS = [
+    'Lebenslauf',
+    'cv',
+    'CV',
+    'Zertifikat',     // Wenn alle Zertifikate geschützt sein sollen
+    'certificate',    // Alternative Schreibweise
+    'HTML',
+    'CSS',
+    'JavaScript',
+    'SQL',
+    'Python'
+];
+
+let pendingDocPath = null;
+
+// Password modal HTML
+const passwordModalHTML = `
+<div id="password-modal" class="modal" style="display:none;">
+    <div class="modal-content" style="max-width:400px;">
+        <span class="close" onclick="closePasswordModal()">&times;</span>
+        <h3>Passwort erforderlich</h3>
+        <p>Dieses Dokument ist passwortgeschützt. Bitte geben Sie das Passwort ein.</p>
+        <input type="password" id="password-input" placeholder="Passwort eingeben" style="width:100%; padding:10px; margin:15px 0; border:1px solid var(--border-color); border-radius:4px;">
+        <div style="display:flex; gap:10px;">
+            <button id="password-submit" class="btn">Bestätigen</button>
+            <button onclick="closePasswordModal()" class="btn" style="background:var(--border-light);">Abbrechen</button>
+        </div>
+    </div>
+</div>
+`;
+
+function needsPassword(docPath, docTitle) {
+    // Check if document is in protected list
+    const lowerTitle = (docTitle || '').toLowerCase();
+    const lowerPath = (docPath || '').toLowerCase();
+    
+    return PROTECTED_DOCS.some(protected => {
+        const lowerProtected = protected.toLowerCase();
+        return lowerTitle.includes(lowerProtected) || lowerPath.includes(lowerProtected);
+    });
+}
+
+function showPasswordModal(docPath) {
+    pendingDocPath = docPath;
+    const modal = document.getElementById('password-modal');
+    if (modal) {
+        modal.style.display = 'block';
+        const input = document.getElementById('password-input');
+        if (input) {
+            input.value = '';
+            input.focus();
+        }
+    }
+}
+
+function closePasswordModal() {
+    const modal = document.getElementById('password-modal');
+    if (modal) modal.style.display = 'none';
+    pendingDocPath = null;
+}
+
+function checkPasswordAndOpen() {
+    const userPassword = document.getElementById('password-input').value;
+    if (userPassword === DOCS_PASSWORD) {
+        if (pendingDocPath) {
+            window.open(pendingDocPath, '_blank');
+        }
+        closePasswordModal();
+    } else {
+        alert('Falsches Passwort! Zugriff verweigert.');
+        document.getElementById('password-input').value = '';
+        document.getElementById('password-input').focus();
+    }
+}
+
+function handleDocumentAccess(docPath, docTitle) {
+    if (needsPassword(docPath, docTitle)) {
+        showPasswordModal(docPath);
+    } else {
+        window.open(docPath, '_blank');
+    }
+}
+
 // ==================== JSON LOADER ====================
 
 async function loadAllJSON() {
@@ -75,7 +164,7 @@ function renderNavigation() {
     const navItems = [
         { name: "Home", key: "home", icon: "🏠︎" },
         { name: "About", key: "about", icon: "𓂃🖊" },
-        { name: "CV", key: "cv", icon: "🇨🇻" },
+        { name: "CV", key: "cv", icon : ""},
         { name: "Zertifikate", key: "certificates", icon: "🗐" },
         { name: "Projekte", key: "projects", icon: "🗒" },
         { name: "Kontakt", key: "contact", icon: "✉" },
@@ -219,7 +308,6 @@ function renderInterests() {
     console.log(`${interests.length} interests loaded`);
 }
 
-// Render documents with optional filtering
 function renderDocuments(type = 'all') {
     const container = document.getElementById('documents-grid');
     const documents = siteData.documents?.documents;
@@ -254,8 +342,8 @@ function renderDocuments(type = 'all') {
                     ${doc.description ? `<p>${escapeHtml(doc.description)}</p>` : ''}
                     <p class="upload-date">Uploaded: ${doc.uploadDate || 'Unknown'}</p>
                     <div class="document-actions">
-                        ${doc.viewable !== false ? `<button class="btn view-document" data-path="${escapeHtml(doc.path)}">View</button>` : ''}
-                        ${doc.downloadable !== false ? `<a href="${escapeHtml(doc.path)}" download><button class="btn">Download</button></a>` : ''}
+                        ${doc.viewable !== false ? `<button class="btn view-document" data-path="${escapeHtml(doc.path)}" data-title="${escapeHtml(doc.title)}">View</button>` : ''}
+                        ${doc.downloadable !== false ? `<a href="${escapeHtml(doc.path)}" download class="download-link" data-path="${escapeHtml(doc.path)}" data-title="${escapeHtml(doc.title)}"><button class="btn download-document">Download</button></a>` : ''}
                     </div>
                 </div>
             </div>
@@ -268,11 +356,17 @@ function renderDocuments(type = 'all') {
     document.querySelectorAll('.view-document').forEach(btn => {
         btn.addEventListener('click', function() {
             const path = this.getAttribute('data-path');
-            if (typeof openModal === 'function') {
-                openModal(path);
-            } else {
-                window.open(path, '_blank');
-            }
+            const title = this.getAttribute('data-title');
+            handleDocumentAccess(path, title);
+        });
+    });
+    
+    document.querySelectorAll('.download-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const path = this.getAttribute('data-path');
+            const title = this.getAttribute('data-title');
+            handleDocumentAccess(path, title);
         });
     });
 }
@@ -539,7 +633,7 @@ function renderProjects() {
             <div class="project-card">
                 <h3>${escapeHtml(project.name)}</h3>
                 <p>${escapeHtml(project.description)}</p>
-                ${project.link ? `<a href="${project.link}" target="_blank" class="btn"> Explore </a>` : ''}
+                ${project.link ? `<a href="${project.link}" target="_blank" class="btn">Explore</a>` : ''}
             </div>
         `;
     });
@@ -757,10 +851,37 @@ function showError(message) {
     });
 }
 
+// ==================== ADD PASSWORD MODAL TO PAGE ====================
+
+function addPasswordModal() {
+    if (!document.getElementById('password-modal')) {
+        document.body.insertAdjacentHTML('beforeend', passwordModalHTML);
+        const submitBtn = document.getElementById('password-submit');
+        const passwordInput = document.getElementById('password-input');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', checkPasswordAndOpen);
+        }
+        if (passwordInput) {
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPasswordAndOpen();
+                }
+            });
+        }
+        // Add close functionality to modal close button
+        const closeBtn = document.querySelector('#password-modal .close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closePasswordModal);
+        }
+    }
+}
+
 // ==================== MAIN INIT ====================
 
 async function init() {
     console.log("CV Loader initializing...");
+    
+    addPasswordModal();
     
     const success = await loadAllJSON();
     if (!success) {
