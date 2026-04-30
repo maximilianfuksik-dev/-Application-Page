@@ -6,9 +6,10 @@
     "phone": "01516 1859480",
     "email": "maximilianfuksik@gmail.com",
     "address": {
-      "city": "Castrop-Rauxel",
+      "street": "Hochstraße 38",
+      "city": "44575 Castrop-Rauxel",
       "country": "Deutschland"
-    }
+      }
   },
   "workExperience": [
     {

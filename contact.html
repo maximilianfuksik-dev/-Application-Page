@@ -15,14 +15,8 @@
         <div class="icon"></div>
         <div id="nav">
             <nav>
-                <ul id="nav-links"></ul>
-                <li class="dark-mode-item">
-                    <span id="dayNight"> 🔆 | ☾ </span>
-                    <label class="darkMode" for="toggle-checkbox">
-                        <input type="checkbox" id="toggle-checkbox">
-                        <span class="d-btn"></span>
-                    </label>
-                </li>
+                <ul id="nav-links">
+                </ul>
             </nav>
         </div>
     </div>
@@ -41,7 +35,7 @@
     <aside class="sidebar">
         <div class="widget search-widget">
             <h3 id="search-title"></h3>
-            <span class="search-icon">🔍</span>
+            <span class="search-icon"></span>
             <input type="text" id="json-search" placeholder="">
         </div>
 
@@ -80,9 +74,11 @@
     </main>
 </div>
 
-<!-- FOOTER -->
+<!-- FOOTER - Dynamic from config.json -->
 <footer>
-    <p id="footer-content"></p>
+    <p id="footer-links">
+        <!-- Dynamic footer links from config.json -->
+    </p>
 </footer>
 
 <script src="assets/js/cv-loader.js"></script>

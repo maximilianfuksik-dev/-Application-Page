@@ -6,6 +6,7 @@
         "title": "Information according to § 5 TMG",
         "content": [
           "{name}",
+          "{street}",
           "{city}",
           "{country}"
         ]

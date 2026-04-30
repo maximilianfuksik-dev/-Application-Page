@@ -51,8 +51,8 @@
     "documentsSubtitle": "Here you can download or view my CV and other documents.",
     "workTitle": "📁 Work Experience",
     "educationTitle": "🎓 Education & Training",
-    "skillsJsonTitle": " Skills & Abilities",
-    "skillsTitle": " Skills & Abilities",
+    "skillsJsonTitle": "⭐ Skills & Abilities",
+    "skillsTitle": "⭐ Skills & Abilities",
     "progLangTitle": "🖳 Programming Languages",
     "softskillsTitle": "☕ Soft Skills",
     "languagesTitle": "🗣 Languages",
@@ -93,5 +93,11 @@
       { "name": "Microsoft Office", "level": 75 },
       { "name": "Driver's License Class B", "level": 100 }
     ]
+  },
+  "footer": {
+    "impressum": "Legal Notice",
+    "datenschutz": "Privacy Policy",
+    "contact": "Contact",
+    "copyright": "© {year} Maximilian Fuksik. All rights reserved."
   }
 }

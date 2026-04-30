@@ -1,34 +1,39 @@
-/* Grundlegendes Styling */
+/* ============================================
+   LIGHT MODE STYLESHEET
+   ============================================ */
+
+/* Basic Styling - LIGHT MODE */
 :root {
-    /* Primäre Farbpalette */
+    /* Primary color palette */
     --primary-color: #2c3e50;
     --secondary-color: #2c3e50;
     --accent-color: #e74c3c;
+    --hover-color: #3498db;
     
-    /* Hintergrund Farben */
+    /* Background colors - LIGHT */
     --bg-color: #f8f9fa;
     --card-bg: #ffffff;
     --light-bg: #f9f9f9;
     
-    /* Text Farben */
+    /* Text colors - LIGHT */
     --text-color: #333333;
     --text-light: #555555;
     --text-lighter: #777777;
     --text-on-dark: #ffffff;
     
-    /* Border/Outline Farben */
+    /* Border/Outline colors */
     --border-color: #dddddd;
     --border-light: #eeeeee;
     
-    /* Effekte */
+    /* Effects */
     --shadow: 0 2px 15px rgba(0,0,0,0.08);
     --shadow-dark: 0 4px 12px rgba(0,0,0,0.25);
     --transition: all 0.3s ease;
     
-    /* Spezielle Farben */
-    --nav-bg: rgba(255, 255, 255, 0.15);
+    /* Special colors */
+    --nav-bg: rgba(0, 0, 0, 0.15);
     --nav-border: rgba(255, 255, 255, 0.3);
-    --clock-bg: rgba(255, 255, 255, 0.15);
+    --clock-bg: rgba(0, 0, 0, 0.15);
     --footer-bg: var(--primary-color);
     --welcome-gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     --header-gradient: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
@@ -48,9 +53,10 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Haupt-Container */
+/* Main Container */
 .container {
     max-width: 1800px;
     width: 100%;
@@ -111,7 +117,10 @@ header {
     font-weight: 500;
 }
 
-/* Navigation */
+/* ============================================
+   NAVIGATION - Language left, Dark mode right, Links centered
+   ============================================ */
+
 #nav {
     background: var(--nav-bg);
     backdrop-filter: blur(6px);
@@ -120,21 +129,75 @@ header {
     border: 2px solid var(--nav-border);
     box-shadow: var(--shadow-dark);
     margin-top: 10px;
-    position: relative;
 }
 
-#nav ul {
+#nav nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Language Switcher - LEFT */
+.nav-controls-left {
+    display: flex;
+    align-items: center;
+    min-width: 120px;
+}
+
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 4px 10px;
+    border-radius: 30px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.lang-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    color: var(--text-on-dark);
+    opacity: 0.7;
+}
+
+.lang-btn:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.lang-btn.active {
+    opacity: 1;
+    background: var(--primary-color);
+    color: white;
+}
+
+.lang-separator {
+    opacity: 0.5;
+    color: var(--text-on-dark);
+}
+
+/* Navigation Links - CENTER */
+#nav nav ul {
     display: flex;
     justify-content: center;
     align-items: center;
     list-style: none;
     gap: 25px;
-    flex-wrap: nowrap;
-    padding-left: 0;
-    position: relative;
+    margin: 0;
+    padding: 0;
+    flex: 1;
 }
 
-#nav ul li a {
+#nav nav ul li a {
     text-decoration: none;
     color: var(--text-on-dark);
     transition: color 0.3s;
@@ -143,26 +206,27 @@ header {
     white-space: nowrap;
 }
 
-#nav ul li a:hover {
-    color: var(--primary-color);
+#nav nav ul li a:hover {
+    color: var(--hover-color);
 }
 
-/* Darkmode Switch */
-.dark-mode-item {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+/* Dark Mode Switch - RIGHT */
+.nav-controls-right {
     display: flex;
     align-items: center;
-    gap: 10px;
-    white-space: nowrap;
+    justify-content: flex-end;
+    min-width: 120px;
+}
+
+.dark-mode-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 #dayNight {
     font-size: 18px;
     color: var(--text-on-dark);
-    margin-right: 10px;
 }
 
 .darkMode {
@@ -206,7 +270,7 @@ header {
 
 .darkMode input:checked + .d-btn:before {
     transform: translate(30px);
-    background: var(--text-lighter); /*t c*/
+    background: var(--text-lighter);
 }
 
 /* Sidebar */
@@ -218,6 +282,7 @@ header {
     grid-column: 1;
     height: fit-content;
     border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
 }
 
 .widget {
@@ -266,6 +331,7 @@ main {
     grid-column: 2;
     margin-bottom: 30px;
     border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -807,7 +873,6 @@ footer p a:hover {
    IMPRESSUM & DATENSCHUTZ STYLES
    ============================================ */
 
-/* Content Box für Impressum und Datenschutz */
 .content-box {
     background: var(--card-bg);
     padding: 25px;
@@ -824,7 +889,6 @@ footer p a:hover {
     font-size: 2rem;
 }
 
-/* Impressum Section */
 .impressum-section {
     margin-bottom: 30px;
 }
@@ -852,7 +916,6 @@ footer p a:hover {
     color: var(--text-light);
 }
 
-/* Datenschutz Section */
 .datenschutz-section {
     margin-bottom: 35px;
 }
@@ -891,7 +954,7 @@ footer p a:hover {
     color: var(--text-light);
 }
 
-/* Responsive Anpassungen für Impressum & Datenschutz */
+/* Responsive adjustments for Impressum & Datenschutz */
 @media (max-width: 768px) {
     .content-box {
         padding: 15px;
@@ -912,7 +975,7 @@ footer p a:hover {
     }
 }
 
-/* Uhr */
+/* Clock */
 #clock {
     position: absolute;
     top: 15px;
@@ -926,6 +989,7 @@ footer p a:hover {
     border: 2px solid var(--nav-border);
     backdrop-filter: blur(6px);
     min-width: 120px;
+    z-index: 10;
 }
 
 #clock .time {
@@ -940,14 +1004,10 @@ footer p a:hover {
     opacity: 0.85;
 }
 
-/* Responsive Anpassungen */
+/* Responsive adjustments */
 @media (max-width: 1200px) {
     .container {
         max-width: 100%;
-    }
-    
-    #clock {
-        right: 20px;
     }
 }
 
@@ -965,20 +1025,6 @@ footer p a:hover {
     main {
         grid-column: 1;
     }
-    
-    #nav ul {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-        padding-right: 80px;
-    }
-    
-    .dark-mode-item {
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-    }
 }
 
 @media (max-width: 768px) {
@@ -988,34 +1034,41 @@ footer p a:hover {
     
     #nav {
         padding: 10px 15px;
-        padding-right: 80px;
     }
     
-    #nav ul {
+    #nav nav {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    #nav nav ul {
         flex-direction: column;
         gap: 10px;
-        padding-right: 0;
     }
     
-    #nav ul li a {
+    #nav nav ul li a {
         font-size: 16px;
     }
     
-    .dark-mode-item {
-        position: static;
-        transform: none;
-        justify-content: center;
-        margin-top: 10px;
-        order: 1;
-        width: 100%;
+    .nav-controls-left,
+    .nav-controls-right {
+        min-width: auto;
     }
     
     #clock {
-        position: relative;
-        top: auto;
-        right: auto;
-        margin: 10px auto;
-        display: inline-block;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 8px 12px;
+        min-width: 100px;
+    }
+    
+    #clock .time {
+        font-size: 1rem;
+    }
+    
+    #clock #date {
+        font-size: 0.7rem;
     }
     
     .about-item, .about-item.reverse {
@@ -1036,10 +1089,9 @@ footer p a:hover {
 }
 
 /* ============================================
-   JSON CV STYLES - Für deine Bewerbungsseite
+   JSON CV STYLES
    ============================================ */
 
-/* JSON Loading & Error States */
 .json-loading {
     text-align: center;
     padding: 20px;
@@ -1071,7 +1123,6 @@ footer p a:hover {
     margin: 10px 0;
 }
 
-/* Persönliche Daten - JSON Version */
 .json-personal-data p {
     margin: 8px 0;
     line-height: 1.5;
@@ -1139,12 +1190,6 @@ footer p a:hover {
     background: rgba(77, 184, 255, 0.1);
     padding: 3px 10px;
     border-radius: 4px;
-}
-
-.job-meta .location::before,
-.job-meta .period::before {
-    margin-right: 5px;
-    opacity: 0.7;
 }
 
 .job-responsibilities {
@@ -1265,7 +1310,7 @@ footer p a:hover {
     margin-top: 5px;
 }
 
-/* Skill Tags - Unterschiedliche Farben für Kategorien */
+/* Skill Tags */
 .skill-tag {
     display: inline-block;
     padding: 6px 14px;
@@ -1277,21 +1322,18 @@ footer p a:hover {
     border: 1px solid transparent;
 }
 
-/* Sprachen */
 .skills-list.languages .skill-tag {
     background: linear-gradient(135deg, #4db8ff, #3498db);
     color: white;
     box-shadow: 0 2px 5px rgba(77, 184, 255, 0.3);
 }
 
-/* Software */
 .skills-list.software .skill-tag {
     background: linear-gradient(135deg, #36d399, #27ae60);
     color: white;
     box-shadow: 0 2px 5px rgba(54, 211, 153, 0.3);
 }
 
-/* Abilities */
 .skills-list.abilities .skill-tag {
     background: linear-gradient(135deg, #9b59b6, #8e44ad);
     color: white;
@@ -1303,7 +1345,6 @@ footer p a:hover {
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-/* Führerschein */
 .license {
     color: var(--text-color, #333);
     font-weight: 500;
@@ -1339,7 +1380,7 @@ footer p a:hover {
     box-shadow: 0 3px 6px rgba(231, 76, 60, 0.3);
 }
 
-/* Timeline mit JSON-Daten */
+/* Timeline with JSON data */
 .timeline-item.has-data {
     background: rgba(77, 184, 255, 0.05);
     border: 1px solid rgba(77, 184, 255, 0.2);
@@ -1410,11 +1451,7 @@ footer p a:hover {
     gap: 10px;
 }
 
-/* ============================================
-   SOCIAL LINKS STYLES - angepasst an deine Struktur
-   ============================================ */
-
-/* Container für die Social Links */
+/* Social Links */
 .profile-links {
     display: flex;
     flex-direction: column;
@@ -1422,7 +1459,6 @@ footer p a:hover {
     margin-top: 4px;
 }
 
-/* Jeder einzelne Social Link */
 .profile-links a {
     display: flex;
     align-items: center;
@@ -1439,7 +1475,6 @@ footer p a:hover {
     overflow: hidden;
 }
 
-/* Überlauf-Effekt beim Hover */
 .profile-links a::before {
     content: '';
     position: absolute;
@@ -1461,7 +1496,6 @@ footer p a:hover {
     border-color: var(--primary-color);
 }
 
-/* Icon innerhalb des Links */
 .profile-links a .social-icon {
     font-size: 1.5rem;
     min-width: 32px;
@@ -1469,13 +1503,11 @@ footer p a:hover {
     z-index: 1;
 }
 
-/* Text / Name des Links */
 .profile-links a .social-name {
     flex: 1;
     z-index: 1;
 }
 
-/* ===== Individuelle Hover-Farben für verschiedene Plattformen ===== */
 .profile-links a[data-platform="github"]:hover {
     border-color: #333;
     background: #333;
@@ -1494,36 +1526,13 @@ footer p a:hover {
     color: white;
 }
 
-.profile-links a[data-platform="x"]:hover,
-.profile-links a[data-platform="twitter"]:hover {
-    border-color: #000;
-    background: #000;
-    color: white;
-}
-
-/* Fallback für andere Plattformen */
 .profile-links a:hover {
     background: var(--primary-color);
     color: var(--text-on-dark);
     border-color: var(--primary-color);
 }
 
-/* ===== Responsive Anpassungen ===== */
-@media (max-width: 768px) {
-    .profile-links a {
-        padding: 10px 14px;
-    }
-    
-    .profile-links a .social-icon {
-        font-size: 1.3rem;
-        min-width: 28px;
-    }
-}
-
-
-
-
-/* Responsive Design für JSON Sections */
+/* Responsive Design for JSON Sections */
 @media (max-width: 768px) {
     .work-item,
     .education-item,
@@ -1566,7 +1575,7 @@ footer p a:hover {
     }
 }
 
-/* Animationen */
+/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -1585,7 +1594,7 @@ footer p a:hover {
     animation: fadeIn 0.5s ease forwards;
 }
 
-/* Verzögerte Animationen für Items */
+/* Delayed animations for items */
 .work-item:nth-child(1) { animation-delay: 0.1s; }
 .work-item:nth-child(2) { animation-delay: 0.2s; }
 .work-item:nth-child(3) { animation-delay: 0.3s; }

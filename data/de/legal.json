@@ -6,6 +6,7 @@
         "title": "Angaben gemäß § 5 TMG",
         "content": [
           "{name}",
+          "{street}",
           "{city}",
           "{country}"
         ]

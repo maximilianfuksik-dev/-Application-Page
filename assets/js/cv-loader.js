@@ -122,31 +122,6 @@ function getLanguageFromStorage() {
     return currentLang;
 }
 
-// Adds language switcher buttons to navigation bar
-function renderLanguageSwitcher() {
-    const navContainer = document.getElementById('nav-links');
-    if (!navContainer) return;
-    
-    if (document.getElementById('lang-switcher')) return;
-    
-    const langSwitcherHTML = `
-        <li id="lang-switcher" class="lang-switcher-item">
-            <button class="lang-btn ${currentLang === 'de' ? 'active' : ''}" data-lang="de">DE</button>
-            <span class="lang-separator">|</span>
-            <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" data-lang="en">EN</button>
-        </li>
-    `;
-    
-    navContainer.insertAdjacentHTML('beforeend', langSwitcherHTML);
-    
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const lang = btn.getAttribute('data-lang');
-            setLanguage(lang);
-        });
-    });
-}
-
 // ==================== JSON LOADER ====================
 
 // Builds file path based on current language
@@ -204,19 +179,31 @@ function getCurrentPage() {
     return pageName;
 }
 
-// ==================== RENDER FUNCTIONS ====================
-
 // Renders navigation menu from config
 function renderNavigation() {
     const config = siteData.config;
     if (!config?.navigation) return;
     
-    const navContainer = document.getElementById('nav-links');
-    if (!navContainer) return;
+    const nav = document.querySelector('#nav nav');
+    if (!nav) return;
     
-    const existingSwitcher = document.getElementById('lang-switcher');
-    navContainer.innerHTML = '';
+    // Clear nav
+    nav.innerHTML = '';
     
+    // ========== LEFT: Language Switcher ==========
+    const leftDiv = document.createElement('div');
+    leftDiv.className = 'nav-controls-left';
+    leftDiv.innerHTML = `
+        <div class="lang-switcher">
+            <button class="lang-btn ${currentLang === 'de' ? 'active' : ''}" data-lang="de">DE</button>
+            <span class="lang-separator">|</span>
+            <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" data-lang="en">EN</button>
+        </div>
+    `;
+    nav.appendChild(leftDiv);
+    
+    // ========== CENTER: Navigation Links ==========
+    const ul = document.createElement('ul');
     const navItems = [
         { name: "Home", key: "home", icon: "🏠︎" },
         { name: "About", key: "about", icon: "𓂃🖊" },
@@ -226,30 +213,75 @@ function renderNavigation() {
         { name: "Contact", key: "contact", icon: "✉" }
     ];
     
-    let html = '';
     navItems.forEach(item => {
         const path = config.navigation[item.key];
         if (path) {
-            html += `<li><a href="${path}"> ${item.icon} ${item.name}</a></li>`;
+            const li = document.createElement('li');
+            li.innerHTML = `<a href="${path}"> ${item.icon} ${item.name}</a>`;
+            ul.appendChild(li);
         }
     });
+    nav.appendChild(ul);
     
-    navContainer.innerHTML = html;
+    // ========== RIGHT: Dark Mode ==========
+    const rightDiv = document.createElement('div');
+    rightDiv.className = 'nav-controls-right';
+    rightDiv.innerHTML = `
+        <div class="dark-mode-item">
+            <span id="dayNight"> 🔆 | ☾ </span>
+            <label class="darkMode" for="toggle-checkbox">
+                <input type="checkbox" id="toggle-checkbox">
+                <span class="d-btn"></span>
+            </label>
+        </div>
+    `;
+    nav.appendChild(rightDiv);
     
-    if (existingSwitcher) {
-        navContainer.appendChild(existingSwitcher);
-    } else {
-        renderLanguageSwitcher();
-    }
-    
+    // Add event listeners to language buttons
     document.querySelectorAll('.lang-btn').forEach(btn => {
-        const lang = btn.getAttribute('data-lang');
-        if (lang === currentLang) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
+        btn.addEventListener('click', function(e) {
+            const lang = this.getAttribute('data-lang');
+            setLanguage(lang);
+        });
     });
+    
+    // ========== FIX: Re-attach Dark Mode event listener ==========
+    const darkModeCheckbox = document.getElementById('toggle-checkbox');
+    const themeStylesheet = document.getElementById('light');
+    
+    if (darkModeCheckbox && themeStylesheet) {
+        // Load saved theme
+        const userTheme = localStorage.getItem('theme');
+        const now = new Date();
+        const hours = now.getHours();
+        
+        let initialTheme;
+        if (userTheme) {
+            initialTheme = userTheme;
+        } else {
+            initialTheme = (hours >= 18 || hours < 6) ? "dark" : "light";
+        }
+        
+        function setTheme(theme) {
+            const href = theme === "dark" ? "assets/css/styledark.css" : "assets/css/stylesheet.css";
+            themeStylesheet.setAttribute("href", href);
+            console.log(`Theme changed to: ${theme}`);
+        }
+        
+        // Apply initial theme
+        setTheme(initialTheme);
+        darkModeCheckbox.checked = initialTheme === "dark";
+        
+        // Remove existing listeners and add new one
+        const newCheckbox = darkModeCheckbox.cloneNode(true);
+        darkModeCheckbox.parentNode.replaceChild(newCheckbox, darkModeCheckbox);
+        
+        newCheckbox.addEventListener("change", function() {
+            const newTheme = this.checked ? "dark" : "light";
+            setTheme(newTheme);
+            localStorage.setItem("theme", newTheme);
+        });
+    }
     
     console.log("Navigation rendered");
 }
@@ -280,19 +312,33 @@ function renderSocialLinks() {
 // Renders footer with legal links and copyright
 function renderFooter() {
     const config = siteData.config;
+    const footerTexts = siteData.pageContent?.footer;
     const container = document.getElementById('footer-links');
     if (!container) return;
     
     const currentYear = new Date().getFullYear();
     
-    if (config?.footer) {
+    if (config?.footer && footerTexts) {
         let html = '';
-        if (config.footer.impressum) html += `<a href="${config.footer.impressum}">Impressum</a> | `;
-        if (config.footer.datenschutz) html += `<a href="${config.footer.datenschutz}">Privacy Policy</a> | `;
-        if (config.footer.contact) html += `<a href="${config.footer.contact}">Contact</a> | `;
-        html += `© ${currentYear} Maximilian Fuksik. All rights reserved.`;
+        if (config.footer.impressum) {
+            html += `<a href="${config.footer.impressum}">${footerTexts.impressum}</a> | `;
+        }
+        if (config.footer.datenschutz) {
+            html += `<a href="${config.footer.datenschutz}">${footerTexts.datenschutz}</a> | `;
+        }
+        if (config.footer.contact) {
+            html += `<a href="${config.footer.contact}">${footerTexts.contact}</a> | `;
+        }
+        // Replace {year} placeholder with actual year
+        const copyrightText = footerTexts.copyright.replace('{year}', currentYear);
+        html += copyrightText;
         container.innerHTML = html;
+    } else if (footerTexts) {
+        // Fallback if config is missing but footerTexts exists
+        const copyrightText = footerTexts.copyright.replace('{year}', currentYear);
+        container.innerHTML = copyrightText;
     } else {
+        // Ultimate fallback
         container.innerHTML = `© ${currentYear} Maximilian Fuksik. All rights reserved.`;
     }
     console.log("Footer rendered");
@@ -360,10 +406,10 @@ function renderContactInfo() {
     const country = info.address?.country || '';
     const locationText = cityOnly + (country ? `, ${country}` : '');
     
-    container.innerHTML = `
-        <p>Email: <span class="json-email">${escapeHtml(info.email)}</span></p>
-        <p>Phone: <span class="json-phone">${escapeHtml(info.phone)}</span></p>
-        <p>Location: <span class="json-location">${escapeHtml(locationText)}</span></p>
+        container.innerHTML = `
+        <p>📧 <span class="json-email">${escapeHtml(info.email)}</span></p>
+        <p>📞 <span class="json-phone">${escapeHtml(info.phone)}</span></p>
+        <p>📍 <span class="json-location">${escapeHtml(locationText)}</span></p>
     `;
     console.log("Contact info loaded");
 }
@@ -915,11 +961,12 @@ function renderDatenschutz() {
 
 // ==================== HELPER FUNCTIONS ====================
 
-// Sets text content of an element by selectorfunction setText(selector, text) {
+// Sets text content of an element by selector
+function setText(selector, text) {
     if (!text) return;
     const element = document.querySelector(selector);
     if (element) element.textContent = text;
-
+}
 
 // Escapes HTML special characters to prevent XSS
 function escapeHtml(str) {

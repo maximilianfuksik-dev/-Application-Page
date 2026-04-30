@@ -93,5 +93,11 @@
       { "name": "Microsoft Office", "level": 75 },
       { "name": "Führerschein Klasse B", "level": 100 }
     ]
+  },
+  "footer": {
+    "impressum": "Impressum",
+    "datenschutz": "Datenschutz",
+    "contact": "Kontakt",
+    "copyright": "© {year} Maximilian Fuksik. Alle Rechte vorbehalten."
   }
 }

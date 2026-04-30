@@ -5,14 +5,15 @@
 
 // ==================== CLOCK ====================
 
+// Updates the clock display with current time and date
 function updateClock() {
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, "0");
     const minutes = now.getMinutes().toString().padStart(2, "0");
     const seconds = now.getSeconds().toString().padStart(2, "0");
     
-    const days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
-    const months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     const dayName = days[now.getDay()];
     const monthName = months[now.getMonth()];
@@ -27,7 +28,7 @@ function updateClock() {
     if (hoursEl) hoursEl.textContent = hours;
     if (minutesEl) minutesEl.textContent = minutes;
     if (secondsEl) secondsEl.textContent = seconds;
-    if (dateEl) dateEl.textContent = `${dayName}, ${monthName} ${day}. ${year}`;
+    if (dateEl) dateEl.textContent = `${dayName}, ${monthName} ${day}, ${year}`;
 }
 
 // Start clock only if element exists
@@ -38,6 +39,7 @@ if (document.getElementById('clock')) {
 
 // ==================== MODAL (PDF Viewer) ====================
 
+// Opens modal with PDF viewer
 function openModal(filePath) {
     const modal = document.getElementById("pdf-modal");
     const frame = document.getElementById("modal-frame");
@@ -48,6 +50,7 @@ function openModal(filePath) {
     }
 }
 
+// Closes modal and stops PDF playback
 function closeModal() {
     const modal = document.getElementById("pdf-modal");
     const frame = document.getElementById("modal-frame");
@@ -75,6 +78,7 @@ document.addEventListener('keydown', function(event) {
 
 // ==================== DARK MODE ====================
 
+// Initialize dark mode toggle
 document.addEventListener("DOMContentLoaded", function() {
     const checkbox = document.getElementById('toggle-checkbox');
     const themeStylesheet = document.getElementById('light');
@@ -84,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return;
     }
 
-    // Load saved theme or detect based on time
+    // Load saved theme or detect based on time (dark from 6 PM to 6 AM)
     const userTheme = localStorage.getItem('theme');
     const now = new Date();
     const hours = now.getHours();
@@ -96,6 +100,7 @@ document.addEventListener("DOMContentLoaded", function() {
         initialTheme = (hours >= 18 || hours < 6) ? "dark" : "light";
     }
 
+    // Switches between light and dark mode stylesheets
     function setTheme(theme) {
         const href = theme === "dark" ? "assets/css/styledark.css" : "assets/css/stylesheet.css";
         themeStylesheet.setAttribute("href", href);
@@ -106,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function() {
     setTheme(initialTheme);
     checkbox.checked = initialTheme === "dark";
 
-    // Listen for changes
+    // Listen for checkbox changes
     checkbox.addEventListener("change", function() {
         const newTheme = checkbox.checked ? "dark" : "light";
         setTheme(newTheme);
@@ -116,6 +121,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // ==================== SKILL BARS ====================
 
+// Initialize skill bar widths from data-level attribute
 document.addEventListener("DOMContentLoaded", function() {
     const skills = document.querySelectorAll(".skill-progress");
     skills.forEach(skill => {
