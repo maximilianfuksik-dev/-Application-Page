@@ -19,7 +19,7 @@ const langNames = { de: 'Deutsch', en: 'English' };
 
 // ==================== PASSWORD PROTECTION ====================
 // Password for protected documents
-const DOCS_PASSWORD = '2026';
+const DOCS_PASSWORD = 'j6e)E6w7g[?4';
 
 // List of protected documents (by title or path)
 const PROTECTED_DOCS = [
