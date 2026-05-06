@@ -2,15 +2,27 @@
   "title": "Meine Projekte",
   "items": [
     {
-      "name": "Bewerbungsseite",
+      "name": "Application Page",
       "description": "Persönliche Portfolio-Website mit HTML, CSS und JavaScript",
       "link": "https://github.com/maximilianfuksik-dev/-Application-Page",
       "image": "project1.jpg"
     },
     {
       "name": "Digital Clock",
-      "description": "Eine einfache Digitaluhr",
+      "description": "Eine einfache digitale Uhr",
       "link": "https://github.com/maximilianfuksik-dev/DigitalClock",
+      "image": ""
+    },
+    {
+      "name": "Taschenrechner",
+      "description": "Ein einfacher Taschenrechner mit grundlegenden Rechenfunktionen. Entwickelt in Java.",
+      "link": "https://github.com/maximilianfuksik-dev/Calculator",
+      "image": ""
+    },
+    {
+      "name": "Coffee Smart System",
+      "description": "Intelligentes Kaffeesystem zur Steuerung und Überwachung von Kaffeemaschinen. Entwickelt in Java.",
+      "link": "https://github.com/maximilianfuksik-dev/CoffeeSystemSmart",
       "image": ""
     }
   ]

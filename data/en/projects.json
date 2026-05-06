@@ -12,6 +12,18 @@
       "description": "A simple digital clock",
       "link": "https://github.com/maximilianfuksik-dev/DigitalClock",
       "image": ""
+    },
+    {
+      "name": "Calculator",
+      "description": "A simple calculator with basic arithmetic functions. Developed in Java.",
+      "link": "https://github.com/maximilianfuksik-dev/Calculator",
+      "image": ""
+    },
+    {
+      "name": "Coffee Smart System",
+      "description": "Intelligent coffee system for controlling and monitoring coffee machines. Developed in Java.",
+      "link": "https://github.com/maximilianfuksik-dev/CoffeeSystemSmart",
+      "image": ""
     }
   ]
 }
